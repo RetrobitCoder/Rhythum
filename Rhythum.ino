@@ -2,6 +2,7 @@
 #include <Sprites.h>
 
 #include "Bitmaps.h"
+#include "IndicatorBox.h"
 
 enum class GameState : unsigned char
 {
@@ -13,11 +14,16 @@ Sprites sprites;
 
 GameState gameState = GameState::Title;
 
+const byte INDICATOR_BOX_HEIGHT = 16;
+const byte INDICATOR_BOX_WIDTH = 16;
 const byte RHYTHM_BOX_HEIGHT = 16;
 const byte RHYTHM_BOX_WIDTH = WIDTH / 2;
 
 const byte PLAYER_INFO_BOX_HEIGHT = HEIGHT - RHYTHM_BOX_HEIGHT - 1;
 const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
+
+IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
+IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
 
 void setup() 
 {
@@ -62,8 +68,15 @@ void gameWon()
 
 void drawGameDisplay()
 {
+  // Draw Bounding boxes
   ab.drawRect(WIDTH / 2, 0, PLAYER_INFO_BOX_WIDTH, PLAYER_INFO_BOX_HEIGHT); 
   ab.drawRect(WIDTH / 2, HEIGHT - RHYTHM_BOX_HEIGHT, RHYTHM_BOX_WIDTH, RHYTHM_BOX_HEIGHT);
+
+  // Draw good indicator box, perfect shouldn't be visible meant to be collision when perfect hit succeeds
+  ab.drawRoundRect(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH / 4);
+  // TODO remove below debug drawRoundRect since we don't want perfect box to be visible
+  ab.drawRoundRect(WIDTH / 2 + INDICATOR_BOX_WIDTH / 4, HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, INDICATOR_BOX_WIDTH / 8);
+
 }
 
 void gameOver()
@@ -74,6 +87,8 @@ void gameOver()
 void gameLoop()
 {
      drawGameDisplay();
+
+     // TODO check if RhythmBeat collides with good and perfect boxes
 }
 
 void loop() 
