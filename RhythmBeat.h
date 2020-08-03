@@ -6,17 +6,20 @@
 class RhythmBeat
 {
   public:
-    RhythmBeat(){};
-    RhythmBeat(const byte x, const byte y, const byte width, const byte height);
+    RhythmBeat(){}
+    RhythmBeat(const byte x, const byte y, const byte width, const byte height, const uint8_t button);
     ~RhythmBeat() = default;
 
+    uint8_t getButton() const;  
     Rect getHitBox() const;
     void updatePos();
+    
   private:
-    float x;
-    float y;
-    const float MOVE_SPEED = 1 / 8;
-    Rect hitBox;
+    float m_x;
+    float m_y;
+    const float MOVE_SPEED = 0.125;
+    uint8_t m_button;
+    Rect m_hitBox;
 };
 
 #endif // rhythm_beat_h

@@ -1,13 +1,12 @@
 #include "IndicatorBox.h"
 
 /*** Public ***/
-IndicatorBox::IndicatorBox(const byte x, const byte y, const byte width, const byte height, const Arduboy2& arduboy)
+IndicatorBox::IndicatorBox(const byte x, const byte y, const byte width, const byte height, const Arduboy2& arduboy) : m_ab(arduboy)
 {
-  ab = arduboy;
-  HIT_BOX = Rect(x, y, width, height);
+  m_hitBox = Rect(x, y, width, height);
 }
 
 bool IndicatorBox::collides(const Rect& object) const
 {
-  return ab.collide(HIT_BOX, object);
+  return m_ab.collide(m_hitBox, object);
 }

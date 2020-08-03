@@ -6,14 +6,13 @@
 class IndicatorBox
 {
   public:
-    IndicatorBox(){};
     IndicatorBox(const byte x, const byte y, const byte width, const byte height, const Arduboy2& arduboy);
     ~IndicatorBox() = default;
     
     bool collides(const Rect& object) const;
   private:
-    const Arduboy2 ab;
-    const Rect HIT_BOX;
+    Arduboy2 m_ab;
+    Rect m_hitBox;
 };
 
 #endif // indicator_box_h

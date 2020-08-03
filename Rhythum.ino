@@ -3,6 +3,7 @@
 
 #include "Bitmaps.h"
 #include "IndicatorBox.h"
+#include "RhythmBeat.h"
 
 enum class GameState : unsigned char
 {
@@ -24,6 +25,14 @@ const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
 
 IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
 IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
+RhythmBeat beats[5] = 
+{
+  RhythmBeat(WIDTH, HEIGHT - 12, 16, 16, LEFT_BUTTON),
+  RhythmBeat(WIDTH + 16, HEIGHT - 12, 16, 16, RIGHT_BUTTON),
+  RhythmBeat(WIDTH + 32, HEIGHT - 12, 16, 16, UP_BUTTON),
+  RhythmBeat(WIDTH + 48, HEIGHT - 12, 16, 16, DOWN_BUTTON),
+  RhythmBeat(WIDTH + 64, HEIGHT - 12, 16, 16, A_BUTTON)
+};
 
 void setup() 
 {
@@ -61,11 +70,6 @@ void showControls()
   }
 }
 
-void gameWon()
-{
-  
-}
-
 void drawGameDisplay()
 {
   // Draw Bounding boxes
@@ -78,17 +82,39 @@ void drawGameDisplay()
   ab.drawRoundRect(WIDTH / 2 + INDICATOR_BOX_WIDTH / 4, HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, INDICATOR_BOX_WIDTH / 8);
 
 }
-
-void gameOver()
+void updateBeats()
 {
-
+  // TODO make beats a queue
+  for(size_t i = 0; i < 5; i++)
+  {
+    beats[i].updatePos();
+    Rect hitBox = beats[i].getHitBox();
+    // TODO when hitBox.x hits WIDTH / 2 or collision happens when button is pressed delete beat
+    // TODO check collision with boxes when button is pressed and check if button matches beat button
+    ab.setCursor(hitBox.x, hitBox.y);
+    ab.print(beats[i].getButton());
+  }
 }
 
 void gameLoop()
 {
      drawGameDisplay();
+     updateBeats();
+}
 
-     // TODO check if RhythmBeat collides with good and perfect boxes
+void gamePause()
+{
+  
+}
+
+void gameWon()
+{
+  
+}
+
+void gameOver()
+{
+
 }
 
 void loop() 
@@ -109,6 +135,15 @@ void loop()
       break;
     case GameState::Play:
       gameLoop();
+      break;
+    case GameState::Pause:
+      gamePause();
+      break;
+    case GameState::Win:
+      gameWon();
+      break;
+    case GameState::GameOver:
+      gameOver();
       break;
   }
 
