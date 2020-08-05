@@ -17,7 +17,7 @@ class RhythmBeat
   private:
     float m_x;
     float m_y;
-    const float MOVE_SPEED = 0.125;
+    float MOVE_SPEED = 0.125;
     uint8_t m_button;
     Rect m_hitBox;
 };
