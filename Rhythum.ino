@@ -3,7 +3,8 @@
 
 #include "Bitmaps.h"
 #include "IndicatorBox.h"
-#include "RhythmBeat.h"
+#include "Level.h"
+#include "RhythmBeat.h" // TODO remove
 
 enum class GameState : unsigned char
 {
@@ -26,6 +27,7 @@ const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
 IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
 IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
 
+Level level;
 void setup()
 {
   ab.begin();
@@ -75,45 +77,12 @@ void drawGameDisplay()
 
 }
 
-// TODO want to move to a level class
-// Need to do bit operations for managing the beats and limit the total number of beats that can be on the screen
-void levelSetup()
-{
-  uint16_t beatSequence = beatSequences[0];
-
-  while (beatSequence > 0)
-  {
-    ab.clear();
-
-    if (beatSequence & mask)
-    {
-      // make a button beat
-    }
-    else
-    {
-      // make directional beat
-    }
-
-    beatSequence = beatSequence >> 1;
-
-  }
-}
-
-void updateBeats()
-{
-
-}
-
-bool setLevel = true;
 void gameLoop()
 {
-  if (setLevel)
-  {
-    levelSetup();
-    setLevel = false;
-  }
+  level.update();
+  
+  level.drawBeats(ab);
   drawGameDisplay();
-  updateBeats();
 }
 
 void gamePause()

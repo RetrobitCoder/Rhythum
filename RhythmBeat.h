@@ -10,8 +10,21 @@ class RhythmBeat
     RhythmBeat(const byte x, const byte y, const byte width, const byte height, const uint8_t button);
     ~RhythmBeat() = default;
 
-    uint8_t getButton() const;  
+    /**
+     * Get the button to press for this beat
+     * @return button
+     */
+    uint8_t getButton() const;
+
+    /**
+     * Get the hit box of this beat
+     * @return rect of the hitbox
+     */
     Rect getHitBox() const;
+
+    /**
+     * Update position of this beat
+     */
     void updatePos();
     
   private:
