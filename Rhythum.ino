@@ -3,12 +3,11 @@
 
 #include "Bitmaps.h"
 #include "IndicatorBox.h"
-#include "Queue.h"
 #include "RhythmBeat.h"
 
 enum class GameState : unsigned char
 {
-  Title, Controls, Play, Pause, Win, GameOver 
+  Title, Controls, Play, Pause, Win, GameOver
 };
 
 Arduboy2 ab;
@@ -26,9 +25,8 @@ const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
 
 IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
 IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
-Queue<RhythmBeat> beats;
 
-void setup() 
+void setup()
 {
   ab.begin();
   ab.clear();
@@ -38,16 +36,16 @@ void setup()
   ab.display();
   ab.delayShort(3000);
   ab.clear();
-  
+
   ab.initRandomSeed();
 }
 
 void titleScreen()
 {
-  ab.setCursor(WIDTH/2, HEIGHT/2);
+  ab.setCursor(WIDTH / 2, HEIGHT / 2);
   ab.print("Rhythum");
 
-  if(ab.justPressed(A_BUTTON))
+  if (ab.justPressed(A_BUTTON))
   {
     gameState = GameState::Controls;
   }
@@ -55,10 +53,10 @@ void titleScreen()
 
 void showControls()
 {
-  ab.setCursor(WIDTH/2, HEIGHT/2);
+  ab.setCursor(WIDTH / 2, HEIGHT / 2);
   ab.print("Controls");
 
-  if(ab.justPressed(A_BUTTON))
+  if (ab.justPressed(A_BUTTON))
   {
     gameState = GameState::Play;
   }
@@ -67,7 +65,7 @@ void showControls()
 void drawGameDisplay()
 {
   // Draw Bounding boxes
-  ab.drawRect(WIDTH / 2, 0, PLAYER_INFO_BOX_WIDTH, PLAYER_INFO_BOX_HEIGHT); 
+  ab.drawRect(WIDTH / 2, 0, PLAYER_INFO_BOX_WIDTH, PLAYER_INFO_BOX_HEIGHT);
   ab.drawRect(WIDTH / 2, HEIGHT - RHYTHM_BOX_HEIGHT, RHYTHM_BOX_WIDTH, RHYTHM_BOX_HEIGHT);
 
   // Draw good indicator box, perfect shouldn't be visible meant to be collision when perfect hit succeeds
@@ -76,34 +74,56 @@ void drawGameDisplay()
   ab.drawRoundRect(WIDTH / 2 + INDICATOR_BOX_WIDTH / 4, HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, INDICATOR_BOX_WIDTH / 8);
 
 }
-void updateBeats()
-{
-  if(beats.empty())
-  {
-    // TODO make a beat byte array of 0s and 1s where 0 is a random direction and 1 is A button and read that in to make queue
-    RhythmBeat beat = RhythmBeat(WIDTH, HEIGHT - 12, 16, 16, LEFT_BUTTON);
-    beats.push(beat);
-  }
 
-  beats.pop();
-  ab.setCursor(0, HEIGHT/2);
-  ab.print(beats.size());
+// TODO want to move to a level class
+// Need to do bit operations for managing the beats and limit the total number of beats that can be on the screen
+void levelSetup()
+{
+  uint16_t beatSequence = beatSequences[0];
+
+  while (beatSequence > 0)
+  {
+    ab.clear();
+
+    if (beatSequence & mask)
+    {
+      // make a button beat
+    }
+    else
+    {
+      // make directional beat
+    }
+
+    beatSequence = beatSequence >> 1;
+
+  }
 }
 
+void updateBeats()
+{
+
+}
+
+bool setLevel = true;
 void gameLoop()
 {
-     drawGameDisplay();
-     updateBeats();
+  if (setLevel)
+  {
+    levelSetup();
+    setLevel = false;
+  }
+  drawGameDisplay();
+  updateBeats();
 }
 
 void gamePause()
 {
-  
+
 }
 
 void gameWon()
 {
-  
+
 }
 
 void gameOver()
@@ -111,15 +131,15 @@ void gameOver()
 
 }
 
-void loop() 
+void loop()
 {
-  if(!ab.nextFrame()) return;
+  if (!ab.nextFrame()) return;
 
   ab.pollButtons();
 
   ab.clear();
-  
-  switch(gameState)
+
+  switch (gameState)
   {
     case GameState::Title:
       titleScreen();
