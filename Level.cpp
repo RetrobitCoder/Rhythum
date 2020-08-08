@@ -53,6 +53,8 @@ bool Level::lost() const
 void Level::removeBeat(size_t index)
 {
   usable[index] = false;
+
+  resetBeats();
 }
 
 
@@ -71,6 +73,11 @@ void Level::init()
 {
   beat = beatSequences[m_levelID];
 
+  initBeats();
+}
+
+void Level::initBeats()
+{
   uint16_t beatSequence = beatSequences[m_levelID];
 
   byte index = 0;
@@ -83,14 +90,52 @@ void Level::init()
     }
     else
     {
-      // TODO pick random direction
-      beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), HEIGHT - RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, LEFT_BUTTON);
+      byte buttonDirection = random(4);
+
+      switch(buttonDirection)
+      {
+        case 0:
+          beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), HEIGHT - RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, LEFT_BUTTON);
+          break;
+        case 1:
+          beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), HEIGHT - RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RIGHT_BUTTON);
+          break;
+        case 2:
+          beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), HEIGHT - RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, UP_BUTTON);
+          break;
+        default:
+          beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), HEIGHT - RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE, DOWN_BUTTON);
+          break;
+      }
     }
 
     usable[index] = true;
-
+    
     beatSequence = beatSequence >> 1;
     index++;
+  }
+}
+
+void Level::resetBeats()
+{
+  bool allRemoved = true;
+
+  for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
+  {
+    if(usable[i])
+    {
+      allRemoved = false;
+      break;
+    }
+  }
+
+  if(allRemoved)
+  {
+    for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
+    {
+      beats[i].setPos(WIDTH + (i * RHYTHM_BOX_SIZE));
+      usable[i] = true;
+    }
   }
 }
 
@@ -100,7 +145,16 @@ void Level::updateBeats()
   {
     if(usable[i])
     {
-      beats[i].updatePos();
+      Rect box = beats[i].getHitBox();
+
+      if(box.x <= WIDTH / 2)
+      {
+        removeBeat(i);
+      }
+      else
+      {
+        beats[i].updatePos();
+      }
     }
   }
 }

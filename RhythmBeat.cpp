@@ -16,6 +16,12 @@ Rect RhythmBeat::getHitBox() const
   return m_hitBox;
 }
 
+void RhythmBeat::setPos(size_t x)
+{
+  m_x = x;
+  m_hitBox.x = x;
+}
+
 void RhythmBeat::updatePos()
 {
   m_x -= MOVE_SPEED;

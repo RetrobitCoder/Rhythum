@@ -60,15 +60,26 @@ class Level
 
     uint16_t beat;
     // Max size of a single beat sequence
-    const byte MAX_BEAT_SIZE = 25; // TODO might want to remove, might not be used for anything
+    const byte MAX_BEAT_SIZE = 10;
+    
     // TODO may want to reduce size to save memory
-    RhythmBeat beats[25];
-    bool usable[25] = { false };
-
+    RhythmBeat beats[10];
+    bool usable[10] = { true };
+    
     /**
      * Do setup stuff for level
      */
     void init();
+
+    /**
+     * Setup beats
+     */
+    void initBeats();
+
+     /**
+     * CReset beats if all beats have been removed
+     */
+    void resetBeats();
 
     /**
      * Update beat positions

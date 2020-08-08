@@ -23,6 +23,12 @@ class RhythmBeat
     Rect getHitBox() const;
 
     /**
+     * Set the position of the beat
+     * @param x position for beat
+     */
+     void setPos(size_t x);
+
+    /**
      * Update position of this beat
      */
     void updatePos();

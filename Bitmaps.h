@@ -18,8 +18,8 @@ const byte PROGMEM mask = 1;
 // How long beatSequences is
 const size_t PROGMEM numSongs = 2;
 
-// Beat sequence needs at least one 1 in it
+// Beat sequence needs at least one 1 in it and 10 bits long
 const uint16_t PROGMEM beatSequences[] =
 {
-  0b1010, 0b0001
+  0b1010000010, 0b0001000101
 };

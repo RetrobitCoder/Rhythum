@@ -1,10 +1,16 @@
+// TODO Try to meed dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
+// TODO checking user button presses matching buttons and intersections with indicator boxes
+// TODO player info (health, streak count, etc)
+// TODO enemy info (health)
+// TODO when A_BUTTON is pressed doing damage to enemy
+// TODO enemy attacking (On missed directional hits?)
+// TODO pause, win, gameover screens
 #include <Arduboy2.h>
 #include <Sprites.h>
 
 #include "Bitmaps.h"
 #include "IndicatorBox.h"
 #include "Level.h"
-#include "RhythmBeat.h" // TODO remove
 
 enum class GameState : unsigned char
 {
@@ -28,6 +34,7 @@ IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WID
 IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
 
 Level level;
+
 void setup()
 {
   ab.begin();
