@@ -7,7 +7,7 @@ class RhythmBeat
 {
   public:
     RhythmBeat(){}
-    RhythmBeat(const byte x, const byte y, const byte width, const byte height, const uint8_t button);
+    RhythmBeat(const byte x, const byte y, const byte width, const byte height, const byte button);
     ~RhythmBeat() = default;
 
     /**
@@ -37,7 +37,7 @@ class RhythmBeat
     float m_x;
     float m_y;
     float MOVE_SPEED = 0.125;
-    uint8_t m_button;
+    byte m_button;
     Rect m_hitBox;
 };
 

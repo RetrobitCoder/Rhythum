@@ -26,7 +26,7 @@ void Level::drawBeats(const Arduboy2& ab)
   }
 }
 
-uint8_t Level::getButton() const
+byte Level::getButton() const
 {
   for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
   {
@@ -71,6 +71,11 @@ void Level::removeBeat()
   }
 
   resetBeats();
+}
+
+void Level::reset()
+{
+  usable[MAX_BEAT_SIZE] = { true };
 }
 
 void Level::update()

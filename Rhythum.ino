@@ -1,16 +1,16 @@
-// TODO Try to meed dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
-// TODO checking user button presses matching buttons and intersections with indicator boxes
-// TODO player info (health, streak count, etc)
-// TODO enemy info (health)
-// TODO when A_BUTTON is pressed doing damage to enemy
-// TODO enemy attacking (On missed directional hits?)
+// TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
+// TODO art
 // TODO pause, win, gameover screens
+// TODO test next enemy and next level
+// TODO music and beatSequences
 #include <Arduboy2.h>
 #include <Sprites.h>
 
 #include "Bitmaps.h"
+#include "Enemy.h"
 #include "IndicatorBox.h"
 #include "Level.h"
+#include "Player.h"
 
 enum class GameState : unsigned char
 {
@@ -33,7 +33,9 @@ const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
 IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
 IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
 
+Enemy enemy;
 Level level;
+Player player;
 
 void setup()
 {
@@ -84,7 +86,7 @@ void drawGameDisplay()
 
 }
 
-bool compareButtons(uint8_t button)
+bool compareButtons(byte button)
 {
 
   if(ab.justPressed(LEFT_BUTTON))
@@ -109,11 +111,11 @@ bool compareButtons(uint8_t button)
   }
 }
 
-void gameLoop()
+void checkUserInput()
 {
   if(ab.justPressed(LEFT_BUTTON) || ab.justPressed(RIGHT_BUTTON) || ab.justPressed(UP_BUTTON) || ab.justPressed(DOWN_BUTTON) || ab.justPressed(A_BUTTON))
   {
-    uint8_t button = level.getButton();
+    byte button = level.getButton();
     Rect hitBox = level.getHitBox();
     bool perfectHit = false;
     
@@ -125,33 +127,74 @@ void gameLoop()
      }
       if(compareButtons(button))
       {
-        // TODO handle combo streak by updating streak
-        // TODO handle perfect hit
+        player.streakIncrease(perfectHit);
+
+        if(ab.justPressed(A_BUTTON))
+        {
+          enemy.damage(player.getAttackDamage());
+        }
       }
       else
       {
-        // TODO button pressed wrong button (damage player and break streak)
+        player.damage(enemy.getAttackDamage());
       }
     }
     else
     {
-      // TODO button press missed indicator box (damage player and break streak)
+      player.damage(enemy.getAttackDamage());
     }
+
+    level.removeBeat();
   }
   else if(ab.justPressed(B_BUTTON))
   {
-    // TODO Pause/Unpause game
+    gameState = GameState::Pause;
   }
+  else
+  {
+    Rect hitBox = level.getHitBox();
+
+    if(hitBox.x <= WIDTH/2)
+    {
+      player.damage(enemy.getAttackDamage());
+    }
+  }
+}
+
+void gameLoop()
+{
+  if(player.isDead())
+  {
+    gameState = GameState::GameOver;
+  }
+  else if(enemy.isDead())
+  {
+    enemy.nextEnemy();
+    player.reset();
+  }
+  else
+  {
+    checkUserInput();
+
+    level.update();
   
-  level.update();
-  
-  level.drawBeats(ab);
-  drawGameDisplay();
+    level.drawBeats(ab);
+    enemy.drawEnemyInfo(ab);
+    player.drawPlayerInfo(ab);
+    drawGameDisplay();
+  }
 }
 
 void gamePause()
 {
+  // TODO draw pause box
+  ab.setCursor(0,0);
+  ab.print("Paused");
 
+  if(ab.justPressed(B_BUTTON))
+  {
+    gameState = GameState::Play;
+  }
 }
 
 void gameWon()
@@ -161,7 +204,17 @@ void gameWon()
 
 void gameOver()
 {
+  // TODO draw game over screen
+  ab.setCursor(0,0);
+  ab.print("Game Over");
 
+  if(ab.justPressed(A_BUTTON))
+  {
+    enemy.reset();
+    player.reset(3);
+    level.reset();
+    gameState = GameState::Play;
+  }
 }
 
 void loop()

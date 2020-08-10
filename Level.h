@@ -18,7 +18,7 @@ class Level
      * Get button of the front most beat
      * @return button of beat
      */
-    uint8_t getButton() const;
+    byte getButton() const;
     
     /**
      * Get hit box of the front most beat
@@ -35,6 +35,11 @@ class Level
      * Remove beat front most beat
      */
     void removeBeat();
+
+    /**
+     * Reset level
+     */
+    void reset();
 
     /**
      * Update level components
