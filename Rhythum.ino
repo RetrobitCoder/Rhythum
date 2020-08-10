@@ -84,8 +84,65 @@ void drawGameDisplay()
 
 }
 
+bool compareButtons(uint8_t button)
+{
+
+  if(ab.justPressed(LEFT_BUTTON))
+  {
+    return LEFT_BUTTON == button;
+  }
+  else if(ab.justPressed(RIGHT_BUTTON))
+  {
+    return RIGHT_BUTTON == button;
+  }
+  else if(ab.justPressed(UP_BUTTON))
+  {
+    return UP_BUTTON == button;
+  }
+  else if(ab.justPressed(DOWN_BUTTON))
+  {
+    return DOWN_BUTTON == button;
+  }
+  else
+  {
+    return A_BUTTON == button;
+  }
+}
+
 void gameLoop()
 {
+  if(ab.justPressed(LEFT_BUTTON) || ab.justPressed(RIGHT_BUTTON) || ab.justPressed(UP_BUTTON) || ab.justPressed(DOWN_BUTTON) || ab.justPressed(A_BUTTON))
+  {
+    uint8_t button = level.getButton();
+    Rect hitBox = level.getHitBox();
+    bool perfectHit = false;
+    
+    if(goodBox.collides(hitBox))
+    {
+     if(perfectBox.collides(hitBox))
+     {
+        perfectHit = true;
+     }
+      if(compareButtons(button))
+      {
+        // TODO handle combo streak by updating streak
+        // TODO handle perfect hit
+      }
+      else
+      {
+        // TODO button pressed wrong button (damage player and break streak)
+      }
+    }
+    else
+    {
+      // TODO button press missed indicator box (damage player and break streak)
+    }
+  }
+  else if(ab.justPressed(B_BUTTON))
+  {
+    // TODO Pause/Unpause game
+  }
+  
   level.update();
   
   level.drawBeats(ab);

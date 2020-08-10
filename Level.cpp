@@ -26,6 +26,20 @@ void Level::drawBeats(const Arduboy2& ab)
   }
 }
 
+uint8_t Level::getButton() const
+{
+  for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
+  {
+    if(usable[i])
+    {
+      return beats[i].getButton();
+    }
+  }
+
+  // Return first beat if somehow all the beats aren't usable
+  return beats[0].getButton();
+}
+
 Rect Level::getHitBox() const
 {
   for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
@@ -40,32 +54,28 @@ Rect Level::getHitBox() const
   return beats[0].getHitBox();
 }
 
-bool Level::isInprogress() const
+void Level::nextLevel()
 {
-  return m_levelContinue;
+  m_levelID++;
 }
 
-bool Level::lost() const
+void Level::removeBeat()
 {
-  return m_levelLost;
-}
-
-void Level::removeBeat(size_t index)
-{
-  usable[index] = false;
+  for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
+  {
+    if(usable[i])
+    {
+      usable[i] = false;
+      break;
+    }
+  }
 
   resetBeats();
 }
 
-
 void Level::update()
 {
   updateBeats();
-}
-
-bool Level::won() const
-{
-  return m_levelWon;
 }
 
 /*** Private ***/
@@ -114,6 +124,13 @@ void Level::initBeats()
     beatSequence = beatSequence >> 1;
     index++;
   }
+}
+
+void Level::removeBeat(size_t index)
+{
+  usable[index] = false;
+
+  resetBeats();
 }
 
 void Level::resetBeats()

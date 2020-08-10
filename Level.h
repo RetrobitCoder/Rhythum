@@ -13,6 +13,12 @@ class Level
     ~Level() = default;
 
     void drawBeats(const Arduboy2& ab);
+
+    /**
+     * Get button of the front most beat
+     * @return button of beat
+     */
+    uint8_t getButton() const;
     
     /**
      * Get hit box of the front most beat
@@ -21,40 +27,22 @@ class Level
     Rect getHitBox() const;
 
     /**
-     * Check if game is still in progress for the current level
-     * @return false, true
+     * Advance level number
      */
-    bool isInprogress() const;
+    void nextLevel();
 
     /**
-     * Check if failed to complete level
-     * @return false, true
+     * Remove beat front most beat
      */
-    bool lost() const;
-
-    /**
-     * Remove beat at index
-     * @param index of beat
-     */
-    void removeBeat(size_t index);
+    void removeBeat();
 
     /**
      * Update level components
      */
     void update();
 
-    /**
-     * Check if completed level
-     * @return false, true
-     */
-    bool won() const;
-
   private:
     size_t m_levelID = 0;
-    
-    bool m_levelLost = false;
-    bool m_levelWon = false;
-    bool m_levelContinue = true;
 
     const byte RHYTHM_BOX_SIZE = 16;
 
@@ -75,6 +63,12 @@ class Level
      * Setup beats
      */
     void initBeats();
+
+    /**
+     * Remove beat at index
+     * @param index of beat
+     */
+    void removeBeat(size_t index);
 
      /**
      * CReset beats if all beats have been removed
