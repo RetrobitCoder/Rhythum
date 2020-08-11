@@ -53,8 +53,7 @@ void setup()
 
 void titleScreen()
 {
-  ab.setCursor(WIDTH / 2, HEIGHT / 2);
-  ab.print("Rhythum");
+  sprites.drawSelfMasked(0, 0, title_screen, 0);
 
   if (ab.justPressed(A_BUTTON))
   {
