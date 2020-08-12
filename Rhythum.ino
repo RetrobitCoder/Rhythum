@@ -1,6 +1,6 @@
 // TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
 // TODO art
-// TODO pause, win, gameover screens
+// TODO win, gameover screens
 // TODO test next enemy and next level
 // TODO music and beatSequences
 #include <Arduboy2.h>
@@ -54,7 +54,10 @@ void setup()
 void titleScreen()
 {
   sprites.drawSelfMasked(0, 0, title_screen, 0);
-
+  
+  ab.setCursor(WIDTH/2 - 48, HEIGHT - 8);
+  ab.print("Press A to start");
+  
   if (ab.justPressed(A_BUTTON))
   {
     gameState = GameState::Controls;
@@ -186,9 +189,12 @@ void gameLoop()
 
 void gamePause()
 {
-  // TODO draw pause box
-  ab.setCursor(0,0);
+  ab.setCursor(WIDTH/2 - 16, HEIGHT/2 - 8);
   ab.print("Paused");
+  ab.setCursor(WIDTH/2 - 36, HEIGHT/2 + 4);
+  ab.print("B to unpause");
+
+  ab.drawRect(16, 16, WIDTH - 32, 32);
 
   if(ab.justPressed(B_BUTTON))
   {

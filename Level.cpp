@@ -21,28 +21,28 @@ void Level::drawBeats(const Sprites& sprites)
     {
       Rect box = beats[i].getHitBox();
 
-      byte frame;
+      byte buttonFrame = 0;
 
       switch(beats[i].getButton())
       {
         case LEFT_BUTTON:
-          frame = 0;
+          buttonFrame = 0;
           break;
         case RIGHT_BUTTON:
-          frame = 1;
+          buttonFrame = 1;
           break;
         case UP_BUTTON:
-          frame = 2;
+          buttonFrame = 2;
           break;
         case DOWN_BUTTON:
-          frame = 3;
+          buttonFrame = 3;
           break;
         case A_BUTTON:
-          frame = 4;
+          buttonFrame = 4;
           break;
       }
       
-      sprites.drawSelfMasked(box.x, box.y, buttons, frame);
+      sprites.drawSelfMasked(box.x, box.y, buttons, buttonFrame);
     }
   }
 }
