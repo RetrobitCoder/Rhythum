@@ -13,15 +13,36 @@ Level::Level(size_t levelNum) : m_levelID(levelNum)
   init();
 }
 
-void Level::drawBeats(const Arduboy2& ab)
+void Level::drawBeats(const Sprites& sprites)
 {
   for(size_t i = 0; i < MAX_BEAT_SIZE; i++)
   {
     if(usable[i])
     {
       Rect box = beats[i].getHitBox();
-      ab.setCursor(box.x, box.y);
-      ab.print(beats[i].getButton());
+
+      byte frame;
+
+      switch(beats[i].getButton())
+      {
+        case LEFT_BUTTON:
+          frame = 0;
+          break;
+        case RIGHT_BUTTON:
+          frame = 1;
+          break;
+        case UP_BUTTON:
+          frame = 2;
+          break;
+        case DOWN_BUTTON:
+          frame = 3;
+          break;
+        case A_BUTTON:
+          frame = 4;
+          break;
+      }
+      
+      sprites.drawSelfMasked(box.x, box.y, buttons, frame);
     }
   }
 }

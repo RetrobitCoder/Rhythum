@@ -12,7 +12,7 @@ class Level
     Level(size_t levelNum);
     ~Level() = default;
 
-    void drawBeats(const Arduboy2& ab);
+    void drawBeats(const Sprites& sprites);
 
     /**
      * Get button of the front most beat

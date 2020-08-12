@@ -177,7 +177,7 @@ void gameLoop()
 
     level.update();
   
-    level.drawBeats(ab);
+    level.drawBeats(sprites);
     enemy.drawEnemyInfo(ab);
     player.drawPlayerInfo(ab);
     drawGameDisplay();
