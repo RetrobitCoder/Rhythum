@@ -43,6 +43,7 @@ void Level::drawBeats(const Sprites& sprites)
       }
       
       sprites.drawSelfMasked(box.x, box.y, buttons, buttonFrame);
+      
     }
   }
 }

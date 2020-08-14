@@ -12,7 +12,7 @@ class Level
     Level(size_t levelNum);
     ~Level() = default;
 
-    void drawBeats(const Sprites& sprites);
+    void drawBeats(const Sprites& sprite);
 
     /**
      * Get button of the front most beat

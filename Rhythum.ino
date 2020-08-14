@@ -179,11 +179,12 @@ void gameLoop()
     checkUserInput();
 
     level.update();
-  
+
+    drawGameDisplay();
     level.drawBeats(sprites);
     enemy.drawEnemyInfo(ab);
     player.drawPlayerInfo(ab);
-    drawGameDisplay();
+
   }
 }
 
