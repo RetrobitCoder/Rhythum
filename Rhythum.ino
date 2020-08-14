@@ -1,5 +1,5 @@
 // TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
-// TODO art
+// TODO art (enemies, avatars, heart, aim retical)
 // TODO win, gameover screens
 // TODO test next enemy and next level
 // TODO music and beatSequences
