@@ -88,6 +88,11 @@ void drawGameDisplay()
 
 }
 
+void drawSpace()
+{
+  sprites.drawSelfMasked(0, 0, space, 0);
+}
+
 bool compareButtons(byte button)
 {
 
@@ -181,6 +186,7 @@ void gameLoop()
     level.update();
 
     drawGameDisplay();
+    drawSpace();
     level.drawBeats(sprites);
     enemy.drawEnemyInfo(ab);
     player.drawPlayerInfo(ab);
