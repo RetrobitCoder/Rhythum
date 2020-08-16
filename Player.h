@@ -7,7 +7,6 @@ class Player
 {
   public:
     Player(){}
-    Player(uint8_t avatar);
     ~Player(){}
 
     /**
@@ -43,7 +42,6 @@ class Player
      */
     void streakIncrease(bool perfectHit = false);
   private:
-    uint8_t m_avatarID = 0; 
     uint8_t m_x = WIDTH/2 + 2;
 
     uint16_t m_lives = 3;

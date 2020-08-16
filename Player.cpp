@@ -3,8 +3,6 @@
 #include "Bitmaps.h"
 
 /*** Public ***/
-Player::Player(uint8_t avatar) : m_avatarID(avatar){}
-
 void Player::damage(uint8_t amount)
 {
   m_hp -= amount;

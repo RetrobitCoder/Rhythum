@@ -37,7 +37,7 @@ Enemy enemy;
 Level level;
 Player player;
 
-uint8_t id = 4;
+uint8_t enemyCount = 0;
 
 void setup()
 {
@@ -64,10 +64,9 @@ void titleScreen()
   {
     gameState = GameState::Controls;
 
-    enemy = Enemy(id, 10);
-    level = Level(id);
-    // TODO change to selected avatar
-    player = Player(0);
+    enemy = Enemy(enemyCount, 10);
+    level = Level(enemyCount);
+    player = Player();
   }
 }
 
