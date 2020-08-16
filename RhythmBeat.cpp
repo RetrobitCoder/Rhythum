@@ -1,12 +1,12 @@
 #include "RhythmBeat.h"
 
 /*** Public ***/
-RhythmBeat::RhythmBeat(const byte x, const byte y, const byte width, const byte height, const byte button) : m_x(x), m_y(y), m_button(button)
+RhythmBeat::RhythmBeat(int16_t x, uint8_t button) : m_x(x), m_button(button)
 {
-  m_hitBox = Rect(x, y, width, height);
+  m_hitBox = Rect(m_x, 48, 16, 16);
 }
 
-byte RhythmBeat::getButton() const
+uint8_t RhythmBeat::getButton() const
 {
   return m_button;
 }
@@ -16,10 +16,11 @@ Rect RhythmBeat::getHitBox() const
   return m_hitBox;
 }
 
-void RhythmBeat::setPos(size_t x)
+void RhythmBeat::setPos(int16_t x)
 {
   m_x = x;
   m_hitBox.x = x;
+  m_hitBox.y = 48;
 }
 
 void RhythmBeat::updatePos()

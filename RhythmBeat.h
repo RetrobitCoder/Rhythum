@@ -7,8 +7,8 @@ class RhythmBeat
 {
   public:
     RhythmBeat(){}
-    RhythmBeat(const byte x, const byte y, const byte width, const byte height, const byte button);
-    ~RhythmBeat() = default;
+    RhythmBeat(int16_t x, uint8_t button);
+    ~RhythmBeat(){}
 
     /**
      * Get the button to press for this beat
@@ -26,7 +26,7 @@ class RhythmBeat
      * Set the position of the beat
      * @param x position for beat
      */
-     void setPos(size_t x);
+     void setPos(int16_t x);
 
     /**
      * Update position of this beat
@@ -34,10 +34,9 @@ class RhythmBeat
     void updatePos();
     
   private:
-    float m_x;
-    float m_y;
+    float m_x = WIDTH;
     float MOVE_SPEED = 0.125;
-    byte m_button;
+    uint8_t m_button;
     Rect m_hitBox;
 };
 

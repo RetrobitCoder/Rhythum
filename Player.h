@@ -7,19 +7,19 @@ class Player
 {
   public:
     Player(){}
-    Player(size_t avatar);
-    ~Player() = default;
+    Player(uint8_t avatar);
+    ~Player(){}
 
     /**
      * Amount of damager the player is taking
      * @param amount of damage
      */
-    void damage(size_t amount);
+    void damage(uint8_t amount);
 
     /**
      * Draw player info on screen
      */
-    void drawPlayerInfo(const Arduboy2& ab);
+    void drawPlayerInfo(const Arduboy2& ab, const Sprites& sprite);
 
      /**
       * Get the amount of damage the player will do
@@ -35,7 +35,7 @@ class Player
     /**
      * Reset player info
      */
-    void reset(uint16_t lives = 0);
+    void reset(uint16_t lives = 3);
 
     /**
      * Increase streak counter
@@ -43,12 +43,12 @@ class Player
      */
     void streakIncrease(bool perfectHit = false);
   private:
-    size_t m_avatarID = 0; 
-    size_t m_x = WIDTH/2 + 2;
+    uint8_t m_avatarID = 0; 
+    uint8_t m_x = WIDTH/2 + 2;
 
-    uint16_t m_lives = 3;
+    uint16_t m_lives = 1;
     int m_hp = 255; // Too low? Make it higher?
-    const uint16_t MAX_HP = 255;
+    uint16_t MAX_HP = 255;
     
     uint32_t m_streak = 0;
     uint32_t m_perfectStreak = 0;

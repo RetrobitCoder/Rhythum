@@ -8,9 +8,9 @@
 class Level
 {
   public:
-    Level();
-    Level(size_t levelNum);
-    ~Level() = default;
+    Level(){};
+    Level(uint8_t levelNum);
+    ~Level();
 
     void drawBeats(const Sprites& sprite);
 
@@ -37,27 +37,22 @@ class Level
     void removeBeat();
 
     /**
-     * Reset level
-     */
-    void reset();
-
-    /**
      * Update level components
      */
     void update();
 
   private:
-    size_t m_levelID = 0;
+    uint8_t m_levelID = 0;
 
-    const byte RHYTHM_BOX_SIZE = 16;
+    byte RHYTHM_BOX_SIZE = 16;
 
-    uint16_t beat;
+    uint16_t m_beat;
     // Max size of a single beat sequence
-    const byte MAX_BEAT_SIZE = 10;
+    byte MAX_BEAT_SIZE = 10;
     
     // TODO may want to reduce size to save memory
-    RhythmBeat beats[10];
-    bool usable[10] = { true };
+    RhythmBeat* m_beats = nullptr;
+    bool m_usable[10] = { true };
     
     /**
      * Do setup stuff for level
@@ -73,7 +68,7 @@ class Level
      * Remove beat at index
      * @param index of beat
      */
-    void removeBeat(size_t index);
+    void removeBeat(uint8_t index);
 
      /**
      * CReset beats if all beats have been removed

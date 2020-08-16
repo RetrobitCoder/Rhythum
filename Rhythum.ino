@@ -1,6 +1,7 @@
-// TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable withou flash light mode
-// TODO art (enemies, avatars, heart, aim retical)
+// TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable without flash light mode: maybe not an issue now?
+// TODO art (avatars)
 // TODO win, gameover screens
+// TODO HIGHT PRIORITY Level is buggy and needs reworking! Next level doesn't quite work and has issue where it won't do beats right if stuff changes from what this file has right now. Enemy works fine with nextEnemy so maybe level just needs adjustments
 // TODO test next enemy and next level
 // TODO music and beatSequences
 #include <Arduboy2.h>
@@ -37,6 +38,8 @@ Enemy enemy;
 Level level;
 Player player;
 
+uint8_t id = 4;
+
 void setup()
 {
   ab.begin();
@@ -61,6 +64,11 @@ void titleScreen()
   if (ab.justPressed(A_BUTTON))
   {
     gameState = GameState::Controls;
+
+    enemy = Enemy(id, 10);
+    level = Level(id);
+    // TODO change to selected avatar
+    player = Player(0);
   }
 }
 
@@ -82,15 +90,13 @@ void drawGameDisplay()
   ab.drawRect(WIDTH / 2, HEIGHT - RHYTHM_BOX_HEIGHT, RHYTHM_BOX_WIDTH, RHYTHM_BOX_HEIGHT);
 
   // Draw good indicator box, perfect shouldn't be visible meant to be collision when perfect hit succeeds
-  ab.drawRoundRect(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH / 4);
-  // TODO remove below debug drawRoundRect since we don't want perfect box to be visible
-  ab.drawRoundRect(WIDTH / 2 + INDICATOR_BOX_WIDTH / 4, HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, INDICATOR_BOX_WIDTH / 8);
-
+    sprites.drawSelfMasked(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, icons, 0);
 }
 
 void drawSpace()
 {
   sprites.drawSelfMasked(0, 0, space, 0);
+  ab.fillRect(16, 16, 31, 31, BLACK);
 }
 
 bool compareButtons(byte button)
@@ -178,6 +184,7 @@ void gameLoop()
   {
     enemy.nextEnemy();
     player.reset();
+    level.nextLevel();
   }
   else
   {
@@ -188,8 +195,8 @@ void gameLoop()
     drawGameDisplay();
     drawSpace();
     level.drawBeats(sprites);
-    enemy.drawEnemyInfo(ab);
-    player.drawPlayerInfo(ab);
+    enemy.drawEnemy(ab, sprites);
+    player.drawPlayerInfo(ab, sprites);
 
   }
 }
@@ -221,11 +228,11 @@ void gameOver()
   ab.print("Game Over");
 
   if(ab.justPressed(A_BUTTON))
-  {
-    enemy.reset();
-    player.reset(3);
-    level.reset();
-    gameState = GameState::Play;
+  { 
+    enemy.~Enemy();
+    level.~Level();
+    player.~Player();
+    gameState = GameState::Title;
   }
 }
 

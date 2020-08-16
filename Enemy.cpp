@@ -3,19 +3,21 @@
 #include "Bitmaps.h"
 
 /*** Public ***/
-Enemy::Enemy(size_t avatar, uint32_t attackDamage) : m_avatarID(avatar), m_attackDamage(attackDamage) {};
+Enemy::Enemy(uint8_t avatar, uint32_t attackDamage) : m_enemyID(avatar), m_attackDamage(attackDamage) {};
 
-void Enemy::damage(size_t amount)
+void Enemy::damage(uint8_t amount)
 {
   m_hp -= amount;
 }
 
-void Enemy::drawEnemyInfo(const Arduboy2& ab)
+void Enemy::drawEnemy(const Arduboy2& ab, const Sprites& sprite)
 {
   uint8_t w = (1.0 * m_hp) / MAX_HP * (WIDTH/2 - 4);
-  ab.fillRect(2,2, w, 6);
+  ab.fillRect(1,1, w, 2);
 
   ab.drawRect(0,0,WIDTH/2 - 1, HEIGHT);
+
+  sprite.drawSelfMasked(0, 0, enemies, m_enemyID);
 }
 
 uint32_t Enemy::getAttackDamage() const
@@ -30,13 +32,8 @@ bool Enemy::isDead() const
 
 void Enemy::nextEnemy(uint32_t attackDamage = 10)
 {
-  m_avatarID++;
+  m_enemyID++;
   m_attackDamage = attackDamage;
-  m_hp = MAX_HP;
-}
-
-void Enemy::reset()
-{
   m_hp = MAX_HP;
 }
 
