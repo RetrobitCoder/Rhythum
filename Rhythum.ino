@@ -1,5 +1,5 @@
 // TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable without flash light mode: maybe not an issue now?
-// TODO win, gameover screens
+// TODO gameover screen
 // TODO HIGHT PRIORITY Level is buggy and needs reworking! Next level doesn't quite work and has issue where it won't do beats right if stuff changes from what this file has right now. Enemy works fine with nextEnemy so maybe level just needs adjustments
 // TODO test next enemy and next level
 // TODO music and beatSequences
@@ -217,7 +217,12 @@ void gamePause()
 
 void gameWon()
 {
+  sprites.drawSelfMasked(0, 0, victory, 0);
 
+  if(ab.justPressed(A_BUTTON))
+  {
+    gameState = GameState::Title;
+  }
 }
 
 void gameOver()
