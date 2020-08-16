@@ -23,6 +23,8 @@ void Player::damage(uint8_t amount)
 void Player::drawPlayerInfo(const Arduboy2& ab, const Sprites& sprite)
 {
   ab.setCursor(m_x, 2);
+  ab.print("Lives ");
+  ab.setCursor(m_x + 48, 2);
   ab.print(m_lives);
 
   ab.setCursor(m_x, 10);
@@ -30,15 +32,16 @@ void Player::drawPlayerInfo(const Arduboy2& ab, const Sprites& sprite)
   uint8_t w = (1.0 * m_hp)/MAX_HP * 45;
   ab.fillRect(m_x + 16, 10, w, 4);
 
-  // TODO draw avatar icon when art is made
   ab.drawRect(m_x, 18, 32, 28);
-
-  // TODO avatar size should be a variable
+  sprite.drawSelfMasked(m_x, 18, avatar, 0);
   ab.setCursor(m_x + 34, 18);
+
+  // Streak
   ab.print("S");
   ab.setCursor(m_x + 42, 18);
   ab.print(m_streak);
 
+  // Damage amount
   ab.setCursor(m_x + 34, 34);
   ab.print("D");
   ab.setCursor(m_x + 42, 34);

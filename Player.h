@@ -46,7 +46,7 @@ class Player
     uint8_t m_avatarID = 0; 
     uint8_t m_x = WIDTH/2 + 2;
 
-    uint16_t m_lives = 1;
+    uint16_t m_lives = 3;
     int m_hp = 255; // Too low? Make it higher?
     uint16_t MAX_HP = 255;
     
