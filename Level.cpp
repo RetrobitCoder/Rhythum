@@ -61,9 +61,6 @@ byte Level::getButton() const
       return m_beats[i].getButton();
     }
   }
-
-  // Return first beat if somehow all the beats aren't usable
-  return m_beats[0].getButton();
 }
 
 Rect Level::getHitBox() const
@@ -75,9 +72,6 @@ Rect Level::getHitBox() const
       return Rect(m_beats[i].getX(), m_beats[i].getY(), RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE);
     }
   }
-
-  // Return first beat if somehow all the beats aren't usable // TODO remove? don't need it but just in case loop calls for hitbox when no beats are usable
-  return Rect(m_beats[0].getX(), m_beats[0].getY(), 16, 16);
 }
 
 void Level::nextLevel()

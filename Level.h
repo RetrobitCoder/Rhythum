@@ -60,7 +60,6 @@ class Level
     // Max size of a single beat sequence
     byte MAX_BEAT_SIZE = 10;
     
-    // TODO may want to reduce size to save memory
     RhythmBeat m_beats[10];
     bool m_usable[10] = { true };
 
