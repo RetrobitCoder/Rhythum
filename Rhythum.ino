@@ -1,6 +1,4 @@
-// TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable without flash light mode: maybe not an issue now?
-// TODO HIGHT PRIORITY Level is buggy and needs reworking! Next level doesn't quite work and has issue where it won't do beats right if stuff changes from what this file has right now. Enemy works fine with nextEnemy so maybe level just needs adjustments
-// TODO test next enemy and next level
+// TODO Try to meet dynamic memory below 75%, may have a chance to become un-updateable without flash light mode: looks like still has some issues when at 75%
 // TODO music and beatSequences
 #include <Arduboy2.h>
 #include <Sprites.h>
@@ -13,7 +11,7 @@
 
 enum class GameState : unsigned char
 {
-  Title, Controls, Play, Pause, Win, GameOver
+  Title, Play, Pause, Win, GameOver
 };
 
 Arduboy2 ab;
@@ -43,8 +41,8 @@ void setup()
   ab.begin();
   ab.clear();
 
-  sprites.drawSelfMasked(0, 0, ArduboyTitle_RetrobitCoder, 0);
-
+  ab.drawCompressed(0, 0, title_card);
+  
   ab.display();
   ab.delayShort(3000);
   ab.clear();
@@ -54,29 +52,18 @@ void setup()
 
 void titleScreen()
 {
-  sprites.drawSelfMasked(0, 0, title_screen, 0);
+  ab.drawCompressed(0, 0, title_screen);
   
   ab.setCursor(WIDTH/2 - 48, HEIGHT - 8);
   ab.print("Press A to start");
   
   if (ab.justPressed(A_BUTTON))
   {
-    gameState = GameState::Controls;
-
-    enemy = Enemy(enemyCount, 10);
-    level = Level(enemyCount);
-    player = Player();
-  }
-}
-
-void showControls()
-{
-  ab.setCursor(WIDTH / 2, HEIGHT / 2);
-  ab.print("Controls");
-
-  if (ab.justPressed(A_BUTTON))
-  {
     gameState = GameState::Play;
+
+    enemy = Enemy();
+    level = Level();
+    player = Player();
   }
 }
 
@@ -184,8 +171,12 @@ void gameLoop()
   else if(enemy.isDead())
   {
     enemy.nextEnemy();
-    player.reset();
+    
+    enemyCount++;
+    
     level.nextLevel();
+    
+    player.reset();
   }
   else
   {
@@ -218,23 +209,28 @@ void gamePause()
 
 void gameWon()
 {
-  sprites.drawSelfMasked(0, 0, victory, 0);
-
+  ab.drawCompressed(0, 0, victory);
+  
   if(ab.justPressed(A_BUTTON))
   {
+    enemyCount = 0;
+    
     gameState = GameState::Title;
   }
 }
 
 void gameOver()
 {
-  sprites.drawSelfMasked(0, 0, defeat, 0);
-
+  ab.drawCompressed(0, 0, defeat);
+  
   if(ab.justPressed(A_BUTTON))
   { 
+    enemyCount = 0;
+    
     enemy.~Enemy();
     level.~Level();
     player.~Player();
+    
     gameState = GameState::Title;
   }
 }
@@ -251,9 +247,6 @@ void loop()
   {
     case GameState::Title:
       titleScreen();
-      break;
-    case GameState::Controls:
-      showControls();
       break;
     case GameState::Play:
       gameLoop();

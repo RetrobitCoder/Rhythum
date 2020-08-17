@@ -5,11 +5,21 @@
 
 #include "RhythmBeat.h"
 
+// Mask to use for generating beats from a beat sequence
+const byte mask = 1;
+
+// TODO add bit more space and make beats faster
+
+// Beat sequence needs at least one 1 in it, at least a 1 on the left most, and 10 bits long
+const uint16_t beatSequences[] =
+{
+  0b1000000001, 0b1000000011, 0b1000000111, 0b1000001111, 0b10000011111
+};
+
 class Level
 {
   public:
-    Level(){};
-    Level(uint8_t levelNum);
+    Level();
     ~Level();
 
     void drawBeats(const Sprites& sprite);
@@ -42,7 +52,7 @@ class Level
     void update();
 
   private:
-    uint8_t m_levelID = 0;
+    uint16_t m_levelID = 0;
 
     byte RHYTHM_BOX_SIZE = 16;
 
@@ -51,8 +61,10 @@ class Level
     byte MAX_BEAT_SIZE = 10;
     
     // TODO may want to reduce size to save memory
-    RhythmBeat* m_beats = nullptr;
+    RhythmBeat m_beats[10];
     bool m_usable[10] = { true };
+
+    byte m_gap = 100;
     
     /**
      * Do setup stuff for level

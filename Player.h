@@ -13,7 +13,7 @@ class Player
      * Amount of damager the player is taking
      * @param amount of damage
      */
-    void damage(uint8_t amount);
+    void damage(const uint8_t& amount);
 
     /**
      * Draw player info on screen
@@ -34,7 +34,7 @@ class Player
     /**
      * Reset player info
      */
-    void reset(uint16_t lives = 3);
+    void reset();
 
     /**
      * Increase streak counter

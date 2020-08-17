@@ -7,14 +7,13 @@ class Enemy
 {
   public:
     Enemy(){};
-    Enemy(uint8_t avatar, uint32_t attackDamage);
     ~Enemy(){};
 
      /**
       * Amount of damager the enemy is taking
       * @param amount of damage
       */
-    void damage(uint8_t amount);
+    void damage(const uint8_t& amount);
 
     /**
      * Draw enmey info on screen
@@ -35,13 +34,12 @@ class Enemy
     /**
      * Set up the next enemy to attack
      */
-     // TODO maybe want to read attackDamage from Bitmaps
-    void nextEnemy(uint32_t attackDamage = 10);
+    void nextEnemy();
 
   private:
     uint8_t m_enemyID = 0;
-    int m_hp = 255; // Too low? Make it higher?
-    uint16_t MAX_HP = 255;
+    int m_hp = 2; // Too low? Make it higher?
+    uint16_t MAX_HP = 2;
 
     uint32_t m_attackDamage = 10;
 };

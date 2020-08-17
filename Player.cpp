@@ -3,7 +3,7 @@
 #include "Bitmaps.h"
 
 /*** Public ***/
-void Player::damage(uint8_t amount)
+void Player::damage(const uint8_t& amount)
 {
   m_hp -= amount;
 
@@ -56,11 +56,11 @@ bool Player::isDead() const
   return m_lives == 0;
 }
 
-void Player::reset(uint16_t lives = 3)
+void Player::reset()
 {
   m_attackDamage = 10;
   m_hp = 255;
-  m_lives = lives;
+  m_lives = 3;
   m_perfectStreak = 0;
   m_streak = 0;
 }

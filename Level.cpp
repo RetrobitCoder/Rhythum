@@ -3,9 +3,8 @@
 #include "Bitmaps.h"
 
 /*** Public ***/
-Level::Level(uint8_t levelNum) : m_levelID(levelNum)
+Level::Level()
 {
-  m_beats = new RhythmBeat[10];
   init();
 }
 
@@ -19,6 +18,7 @@ Level::~Level()
 
 void Level::drawBeats(const Sprites& sprites)
 {
+
   for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
   {
     if(m_usable[i])
@@ -47,8 +47,7 @@ void Level::drawBeats(const Sprites& sprites)
           break;
       }
 
-      sprites.drawSelfMasked(x, y, buttons, buttonFrame);
-           
+      sprites.drawSelfMasked(x, y, buttons, buttonFrame);      
     }
   }
 }
@@ -73,7 +72,7 @@ Rect Level::getHitBox() const
   {
     if(m_usable[i])
     {
-      return Rect(m_beats[i].getX(), m_beats[i].getY(), 16, 16);
+      return Rect(m_beats[i].getX(), m_beats[i].getY(), RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE);
     }
   }
 
@@ -81,12 +80,18 @@ Rect Level::getHitBox() const
   return Rect(m_beats[0].getX(), m_beats[0].getY(), 16, 16);
 }
 
-// TODO instead of nextLevel deconstruct level and make new with id being handled in main, need to do same for enemy
 void Level::nextLevel()
 {
   m_levelID++;
 
-  init();
+  m_beat = beatSequences[m_levelID];
+
+  for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
+  {
+    m_usable[i] = false;
+  }
+  
+  initBeats();
 }
 
 void Level::removeBeat()
@@ -126,7 +131,7 @@ void Level::initBeats()
   {
     if (beatSequence & mask)
     {
-      m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), A_BUTTON);
+      m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, A_BUTTON);
     }
     else
     {
@@ -135,16 +140,16 @@ void Level::initBeats()
       switch(buttonDirection)
       {
         case 0:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), LEFT_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, LEFT_BUTTON);
           break;
         case 1:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), RIGHT_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, RIGHT_BUTTON);
           break;
         case 2:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), UP_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, UP_BUTTON);
           break;
         default:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE), DOWN_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, DOWN_BUTTON);
           break;
       }
     }
@@ -180,7 +185,7 @@ void Level::resetBeats()
   {
     for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
     {
-      m_beats[i].setPos(WIDTH + (i * RHYTHM_BOX_SIZE));
+      m_beats[i].setPos(WIDTH + (i * RHYTHM_BOX_SIZE) + m_gap);
       m_usable[i] = true;
     }
   }

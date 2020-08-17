@@ -40,10 +40,10 @@ class RhythmBeat
     void updatePos();
     
   private:
-    float m_x = WIDTH;
+    int16_t m_x = WIDTH;
     int16_t m_y = 48;
     
-    float MOVE_SPEED = 0.125;
+    byte MOVE_SPEED = 1;
     
     uint8_t m_button;
 };
