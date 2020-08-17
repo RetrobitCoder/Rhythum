@@ -164,11 +164,10 @@ const unsigned char PROGMEM enemies[] =
 // Mask to use for generating beats from a beat sequence
 const byte PROGMEM mask = 1;
 
-// How long beatSequences is
-const uint8_t PROGMEM numSongs = 2;
+// TODO add beat gap and beat speed arrays
 
 // Beat sequence needs at least one 1 in it, at least a 1 on the left most, and 10 bits long
 const uint16_t PROGMEM beatSequences[] =
 {
-  0b1000000010, 0b1001000101
+  0b1000000001, 0b1000000011, 0b1000000111, 0b1000001111, 0b10000011111
 };

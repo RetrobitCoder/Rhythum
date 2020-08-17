@@ -23,7 +23,8 @@ void Level::drawBeats(const Sprites& sprites)
   {
     if(m_usable[i])
     {
-      Rect box = m_beats[i].getHitBox();
+     int16_t x = m_beats[i].getX();
+     int16_t y = m_beats[i].getY();
 
       byte buttonFrame = 0;
 
@@ -46,7 +47,7 @@ void Level::drawBeats(const Sprites& sprites)
           break;
       }
 
-      sprites.drawSelfMasked(box.x, box.y, buttons, buttonFrame);
+      sprites.drawSelfMasked(x, y, buttons, buttonFrame);
            
     }
   }
@@ -72,12 +73,12 @@ Rect Level::getHitBox() const
   {
     if(m_usable[i])
     {
-      return m_beats[i].getHitBox();
+      return Rect(m_beats[i].getX(), m_beats[i].getY(), 16, 16);
     }
   }
 
-  // Return first beat if somehow all the beats aren't usable
-  return m_beats[0].getHitBox();
+  // Return first beat if somehow all the beats aren't usable // TODO remove? don't need it but just in case loop calls for hitbox when no beats are usable
+  return Rect(m_beats[0].getX(), m_beats[0].getY(), 16, 16);
 }
 
 // TODO instead of nextLevel deconstruct level and make new with id being handled in main, need to do same for enemy
@@ -191,9 +192,7 @@ void Level::updateBeats()
   {
     if(m_usable[i])
     {
-      Rect box = m_beats[i].getHitBox();
-
-      if(box.x <= WIDTH / 2)
+      if(m_beats[i].getX() <= WIDTH / 2)
       {
         removeBeat(i);
       }

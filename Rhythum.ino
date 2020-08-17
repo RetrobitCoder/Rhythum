@@ -1,5 +1,4 @@
 // TODO Try to meet dynamic memory below 70%, may have a chance to become un-updateable without flash light mode: maybe not an issue now?
-// TODO gameover screen
 // TODO HIGHT PRIORITY Level is buggy and needs reworking! Next level doesn't quite work and has issue where it won't do beats right if stuff changes from what this file has right now. Enemy works fine with nextEnemy so maybe level just needs adjustments
 // TODO test next enemy and next level
 // TODO music and beatSequences
@@ -178,6 +177,10 @@ void gameLoop()
   {
     gameState = GameState::GameOver;
   }
+  else if(enemyCount > 4)
+  {
+    gameState = GameState::Win;
+  }
   else if(enemy.isDead())
   {
     enemy.nextEnemy();
@@ -195,7 +198,6 @@ void gameLoop()
     level.drawBeats(sprites);
     enemy.drawEnemy(ab, sprites);
     player.drawPlayerInfo(ab, sprites);
-
   }
 }
 

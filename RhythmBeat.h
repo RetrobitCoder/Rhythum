@@ -17,10 +17,16 @@ class RhythmBeat
     uint8_t getButton() const;
 
     /**
-     * Get the hit box of this beat
-     * @return rect of the hitbox
+     * Get the x position of this beat
+     * @return x position
      */
-    Rect getHitBox() const;
+    int16_t getX() const;
+
+    /**
+     * Get the y position of this beat
+     * @return y position
+     */
+    int16_t getY() const;
 
     /**
      * Set the position of the beat
@@ -35,9 +41,11 @@ class RhythmBeat
     
   private:
     float m_x = WIDTH;
+    int16_t m_y = 48;
+    
     float MOVE_SPEED = 0.125;
+    
     uint8_t m_button;
-    Rect m_hitBox;
 };
 
 #endif // rhythm_beat_h
