@@ -125,7 +125,7 @@ void Level::initBeats()
   {
     if (beatSequence & mask)
     {
-      m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, A_BUTTON);
+      m_beats[index] = RhythmBeat(WIDTH + (index * (RHYTHM_BOX_SIZE + m_gap)), A_BUTTON);
     }
     else
     {
@@ -134,16 +134,16 @@ void Level::initBeats()
       switch(buttonDirection)
       {
         case 0:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, LEFT_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * (RHYTHM_BOX_SIZE + m_gap)), LEFT_BUTTON);
           break;
         case 1:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, RIGHT_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * (RHYTHM_BOX_SIZE + m_gap)), RIGHT_BUTTON);
           break;
         case 2:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, UP_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * (RHYTHM_BOX_SIZE + m_gap)), UP_BUTTON);
           break;
         default:
-          m_beats[index] = RhythmBeat(WIDTH + (index * RHYTHM_BOX_SIZE) + m_gap, DOWN_BUTTON);
+          m_beats[index] = RhythmBeat(WIDTH + (index * (RHYTHM_BOX_SIZE + m_gap)), DOWN_BUTTON);
           break;
       }
     }
@@ -179,7 +179,7 @@ void Level::resetBeats()
   {
     for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
     {
-      m_beats[i].setPos(WIDTH + (i * RHYTHM_BOX_SIZE) + m_gap);
+      m_beats[i].setPos(WIDTH + (i * (RHYTHM_BOX_SIZE + m_gap)));
       m_usable[i] = true;
     }
   }

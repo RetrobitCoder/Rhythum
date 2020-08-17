@@ -8,12 +8,10 @@
 // Mask to use for generating beats from a beat sequence
 const byte mask = 1;
 
-// TODO add bit more space and make beats faster
-
 // Beat sequence needs at least one 1 in it, at least a 1 on the left most, and 10 bits long
 const uint16_t beatSequences[] =
 {
-  0b1000000001, 0b1000000011, 0b1000000111, 0b1000001111, 0b10000011111
+  0b1000000001, 0b1000000011, 0b1000000111, 0b1000001111, 0b1000011111
 };
 
 class Level
@@ -63,7 +61,7 @@ class Level
     RhythmBeat m_beats[10];
     bool m_usable[10] = { true };
 
-    byte m_gap = 100;
+    byte m_gap = 8;
     
     /**
      * Do setup stuff for level
