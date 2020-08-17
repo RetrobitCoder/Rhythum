@@ -226,9 +226,7 @@ void gameWon()
 
 void gameOver()
 {
-  // TODO draw game over screen
-  ab.setCursor(0,0);
-  ab.print("Game Over");
+  sprites.drawSelfMasked(0, 0, defeat, 0);
 
   if(ab.justPressed(A_BUTTON))
   { 
