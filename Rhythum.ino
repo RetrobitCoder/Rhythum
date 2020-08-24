@@ -1,6 +1,8 @@
 // TODO Try to meet dynamic memory below 75%, may have a chance to become un-updateable without flash light mode: looks like still has some issues when at 75%
 // TODO music and beatSequences
+// TODO time permitting play test for odd issues like the memory issue noted above and maybe clean up
 #include <Arduboy2.h>
+#include <ArduboyPlaytune.h>
 #include <Sprites.h>
 
 #include "Bitmaps.h"
@@ -8,6 +10,7 @@
 #include "IndicatorBox.h"
 #include "Level.h"
 #include "Player.h"
+#include "Sounds.h"
 
 enum class GameState : unsigned char
 {
@@ -15,6 +18,7 @@ enum class GameState : unsigned char
 };
 
 Arduboy2 ab;
+ArduboyPlaytune tunes(ab.audio.enabled);
 Sprites sprites;
 
 GameState gameState = GameState::Title;
@@ -41,6 +45,10 @@ void setup()
   ab.begin();
   ab.clear();
 
+  ab.audio.on();
+  tunes.initChannel(PIN_SPEAKER_1);
+  tunes.initChannel(PIN_SPEAKER_1);
+  
   ab.drawCompressed(0, 0, title_card);
   
   ab.display();
@@ -79,7 +87,7 @@ void drawGameDisplay()
 
 void drawSpace()
 {
-  sprites.drawSelfMasked(0, 0, space, 0);
+  ab.drawCompressed(0, 0, space);
   ab.fillRect(16, 16, 31, 31, BLACK);
 }
 
@@ -201,6 +209,8 @@ void gamePause()
 
   ab.drawRect(16, 16, WIDTH - 32, 32);
 
+  tunes.stopScore(); // TODO remove
+
   if(ab.justPressed(B_BUTTON))
   {
     gameState = GameState::Play;
@@ -210,18 +220,37 @@ void gamePause()
 void gameWon()
 {
   ab.drawCompressed(0, 0, victory);
+
+  static bool playedMusic = false;
+
+  if(!tunes.playing() && !playedMusic)
+  {
+    tunes.playScore(game_win);
+    playedMusic = true;
+  }
   
   if(ab.justPressed(A_BUTTON))
   {
     enemyCount = 0;
     
     gameState = GameState::Title;
+
+    tunes.stopScore();
+    playedMusic = false;
   }
 }
 
 void gameOver()
 {
   ab.drawCompressed(0, 0, defeat);
+
+  static bool playedMusic = false;
+
+  if(!tunes.playing() && !playedMusic)
+  {
+    tunes.playScore(game_over);
+    playedMusic = true;
+  }
   
   if(ab.justPressed(A_BUTTON))
   { 
@@ -232,6 +261,9 @@ void gameOver()
     player.~Player();
     
     gameState = GameState::Title;
+
+    tunes.stopScore();
+    playedMusic = false;
   }
 }
 
