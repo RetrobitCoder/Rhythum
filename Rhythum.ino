@@ -72,6 +72,8 @@ void titleScreen()
     enemy = Enemy();
     level = Level();
     player = Player();
+
+    level.drawLevelCard(ab);
   }
 }
 
@@ -183,6 +185,11 @@ void gameLoop()
     enemyCount++;
     
     level.nextLevel();
+    
+    if(enemyCount < 5)
+    {
+      level.drawLevelCard(ab);
+    }
     
     player.reset();
   }

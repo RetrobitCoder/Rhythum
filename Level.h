@@ -9,6 +9,7 @@
 const byte mask = 1;
 
 // Beat sequence needs at least one 1 in it, at least a 1 on the left most, and 10 bits long
+// TODO make sequences
 const uint16_t beatSequences[] =
 {
   0b1000000001, 0b1000000011, 0b1000000111, 0b1000001111, 0b1000011111
@@ -21,6 +22,8 @@ class Level
     ~Level();
 
     void drawBeats(const Sprites& sprite);
+
+    void drawLevelCard(const Arduboy2& ab);
 
     /**
      * Get button of the front most beat

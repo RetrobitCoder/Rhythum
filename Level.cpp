@@ -2,6 +2,10 @@
 
 #include "Bitmaps.h"
 
+const char* levelCards[] = {
+  "Let's do some training", "You can't stop the Conductors!", "You can't beat me!", "We need to stop our rogue Beat!", "Your Rhythum vs my Symphony. Who will win!?"
+};
+
 /*** Public ***/
 Level::Level()
 {
@@ -50,6 +54,23 @@ void Level::drawBeats(const Sprites& sprites)
       sprites.drawSelfMasked(x, y, buttons, buttonFrame);      
     }
   }
+}
+
+void Level::drawLevelCard(const Arduboy2& ab)
+{
+  ab.clear();
+
+  ab.setTextWrap(true);
+
+  ab.setCursor(0, HEIGHT/2);
+
+  ab.print(levelCards[m_levelID]);
+
+  ab.display();
+
+  ab.delayShort(5000);
+
+  ab.setTextWrap(false);
 }
 
 byte Level::getButton() const
