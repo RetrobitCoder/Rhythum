@@ -38,8 +38,8 @@ class Enemy
 
   private:
     uint8_t m_enemyID = 0;
-    int m_hp = 2; // Too low? Make it higher?
-    uint16_t MAX_HP = 2;
+    int m_hp = 255; // Too low? Make it higher?
+    uint16_t MAX_HP = 255;
 
     uint32_t m_attackDamage = 10;
 };

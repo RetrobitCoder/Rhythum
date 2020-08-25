@@ -1,6 +1,3 @@
-// TODO Try to meet dynamic memory below 75%, may have a chance to become un-updateable without flash light mode: looks like still has some issues when at 75%
-// TODO music and beatSequences
-// TODO time permitting play test for odd issues like the memory issue noted above and maybe clean up
 #include <Arduboy2.h>
 #include <ArduboyPlaytune.h>
 #include <Sprites.h>
@@ -74,6 +71,7 @@ void titleScreen()
     player = Player();
 
     level.drawLevelCard(ab);
+    tunes.playScore(battle_music);
   }
 }
 
@@ -173,10 +171,14 @@ void gameLoop()
   if(player.isDead())
   {
     gameState = GameState::GameOver;
+    
+    tunes.stopScore();
   }
   else if(enemyCount > 4)
   {
     gameState = GameState::Win;
+
+    tunes.stopScore();
   }
   else if(enemy.isDead())
   {
@@ -185,11 +187,15 @@ void gameLoop()
     enemyCount++;
     
     level.nextLevel();
+
+    tunes.stopScore();
     
     if(enemyCount < 5)
     {
       level.drawLevelCard(ab);
     }
+
+    tunes.playScore(battle_music);
     
     player.reset();
   }
@@ -216,11 +222,13 @@ void gamePause()
 
   ab.drawRect(16, 16, WIDTH - 32, 32);
 
-  tunes.stopScore(); // TODO remove
-
+  tunes.stopScore();
+  
   if(ab.justPressed(B_BUTTON))
   {
     gameState = GameState::Play;
+
+    tunes.playScore(battle_music);
   }
 }
 

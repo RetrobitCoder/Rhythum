@@ -43,7 +43,7 @@ class RhythmBeat
     float m_x = WIDTH;
     int16_t m_y = 48;
     
-    float MOVE_SPEED = 0.5;
+    float MOVE_SPEED = 1.25;
     
     uint8_t m_button;
 };
