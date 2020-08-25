@@ -6,8 +6,9 @@
 class IndicatorBox
 {
   public:
+    IndicatorBox(){}
     IndicatorBox(const byte x, const byte y, const byte width, const byte height, const Arduboy2& arduboy);
-    ~IndicatorBox() = default;
+    ~IndicatorBox(){}
 
     /**
      * Checks if object collided with this box

@@ -28,8 +28,8 @@ const byte RHYTHM_BOX_WIDTH = WIDTH / 2;
 const byte PLAYER_INFO_BOX_HEIGHT = HEIGHT - RHYTHM_BOX_HEIGHT - 1;
 const byte PLAYER_INFO_BOX_WIDTH = WIDTH / 2;
 
-IndicatorBox goodBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
-IndicatorBox perfectBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
+IndicatorBox goodBox;
+IndicatorBox perfectBox;
 
 Enemy enemy;
 Level level;
@@ -69,6 +69,9 @@ void titleScreen()
     enemy = Enemy();
     level = Level();
     player = Player();
+
+    goodBox = IndicatorBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
+    perfectBox = IndicatorBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
 
     level.drawLevelCard(ab);
     tunes.playScore(battle_music);
@@ -130,6 +133,7 @@ void checkUserInput()
      {
         perfectHit = true;
      }
+
       if(compareButtons(button))
       {
         player.streakIncrease(perfectHit);
@@ -274,6 +278,9 @@ void gameOver()
     enemy.~Enemy();
     level.~Level();
     player.~Player();
+
+    goodBox.~IndicatorBox();
+    perfectBox.~IndicatorBox();
     
     gameState = GameState::Title;
 
