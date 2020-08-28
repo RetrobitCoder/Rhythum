@@ -6,29 +6,27 @@ Game Art: Zachariah Falgout (RetrobitCoder)
 
 Arduboy Library: Arduboy2
 
-Play the game in [browser](https://felipemanga.github.io/ProjectABE/?url=url).
-
-You will want to click build and then the step(F7) arrow.
-
 This game can also be played by downloading [Felipe Manga's Arduboy Emulator](https://github.com/felipemanga/ProjectABE/releases) and dragging and dropping in the hex file.
 
-![screenshot0](path)
-![screenshot1](path)
+![screenshot0](/images/screenshot0.png)
+![screenshot1](/images/screenshot1.png)
 
-[//]: # (story of game)
+Mobile suit/mecha rhythm like game for the Arduboy.
+
 ## Story
 ---
 
-[//]: # (how to play with images from game)
+You are piloting the Orchestra's new Rhythum mobile suit unit, when the ship you are on is attacked by a fleet of enemy suits known as the Conductors. Do you have what it takes to survive the Conductors' attack?
+
 ## How to Play
 ---
-![title screen](path)
 
-![character image](path)
+Press the correct (directional or A) button when icon lines up with aim reticule
 
-[//]: # (controls)
 ## Controls
 ---
+
+Pause/Unpause game with B button
 
 ## How to Download
 ---
@@ -39,7 +37,6 @@ Using an Arduboy game uploader that supports .hex files, or any other tools that
 ### source
 Rename file from game-master to game then upload to Arduboy using the Arduino IDE.
 
-[//]: # (license)
 ## Game License
 ---
 [MIT](https://opensource.org/licenses/MIT)
