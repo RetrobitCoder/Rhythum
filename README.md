@@ -42,7 +42,7 @@ Pause/Unpause game with B button
 Using an Arduboy game uploader that supports .hex files, or any other tools that can upload .hex files to the Arduboy, upload the .hex file to your Arduboy.
 
 ### source
-Rename file from game-master to game then upload to Arduboy using the Arduino IDE.
+Rename file from game-master to game or move/copy game sub folder then upload to Arduboy using the Arduino IDE.
 
 ## Game License
 ---
