@@ -56,7 +56,7 @@ void Level::drawBeats(const Sprites& sprites)
   }
 }
 
-void Level::drawLevelCard(const Arduboy2& ab)
+void Level::drawLevelCard(Arduboy2& ab)
 {
   ab.clear();
 
@@ -74,25 +74,37 @@ void Level::drawLevelCard(const Arduboy2& ab)
 }
 
 byte Level::getButton() const
-{
+{  
+  byte button = 0;
+  
   for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
   {
+    button = m_beats[i].getButton();
+
     if(m_usable[i])
     {
-      return m_beats[i].getButton();
+      break;
     }
   }
+
+  return button;
 }
 
 Rect Level::getHitBox() const
-{
+{  
+  Rect hitbox = Rect(0,0,0,0);
+  
   for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
   {
+    hitbox = Rect(m_beats[i].getX(), m_beats[i].getY(), RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE);
+
     if(m_usable[i])
     {
-      return Rect(m_beats[i].getX(), m_beats[i].getY(), RHYTHM_BOX_SIZE, RHYTHM_BOX_SIZE);
+      break;
     }
   }
+
+  return hitbox;
 }
 
 void Level::nextLevel()

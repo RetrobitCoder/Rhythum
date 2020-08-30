@@ -18,7 +18,7 @@ void Player::damage(const uint8_t& amount)
   m_attackDamage = 10;
 }
 
-void Player::drawPlayerInfo(const Arduboy2& ab, const Sprites& sprite)
+void Player::drawPlayerInfo(Arduboy2& ab, const Sprites& sprite)
 {
   ab.setCursor(m_x, 2);
   ab.print("Lives ");

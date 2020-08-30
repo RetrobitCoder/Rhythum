@@ -8,7 +8,7 @@ void Enemy::damage(const uint8_t& amount)
   m_hp -= amount;
 }
 
-void Enemy::drawEnemy(const Arduboy2& ab, const Sprites& sprite)
+void Enemy::drawEnemy(Arduboy2& ab, const Sprites& sprite)
 {
   uint8_t w = (1.0 * m_hp) / MAX_HP * (WIDTH/2 - 4);
   ab.fillRect(1,1, w, 2);

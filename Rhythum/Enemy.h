@@ -18,7 +18,7 @@ class Enemy
     /**
      * Draw enmey info on screen
      */
-    void drawEnemy(const Arduboy2& ab, const Sprites& sprite);
+    void drawEnemy(Arduboy2& ab, const Sprites& sprite);
 
     /**
      * Get the amount of damage the enemy will do

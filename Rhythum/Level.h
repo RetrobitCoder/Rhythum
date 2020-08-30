@@ -22,7 +22,7 @@ class Level
 
     void drawBeats(const Sprites& sprite);
 
-    void drawLevelCard(const Arduboy2& ab);
+    void drawLevelCard(Arduboy2& ab);
 
     /**
      * Get button of the front most beat
