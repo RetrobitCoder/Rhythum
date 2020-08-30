@@ -1,4 +1,11 @@
 # Rhythum
+![banner image](/images/banner.png)
+
+Banner image and lose screen by: LENZ
+
+LENZ's work can be found at:
+
+[LENZ's Instagram](https://www.instagram.com/lenzartz/)
 
 Developer: Zachariah Falgout (RetrobitCoder)
 
