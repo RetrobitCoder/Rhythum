@@ -40,7 +40,7 @@ class Player
      * Increase streak counter
      * @param bool if perfect hit was made
      */
-    void streakIncrease(bool perfectHit = false);
+    void streakIncrease(bool perfectHit);
   private:
     uint8_t m_x = WIDTH/2 + 2;
 
