@@ -7,7 +7,7 @@ class IndicatorBox
 {
   public:
     IndicatorBox(){}
-    IndicatorBox(const int16_t x, const int16_t y, const uint8_t width, const uint8_t height, Arduboy2& arduboy);
+    IndicatorBox(int16_t x, int16_t y, uint8_t width, uint8_t height, Arduboy2& arduboy);
     ~IndicatorBox(){}
 
     /**
