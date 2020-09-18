@@ -18,7 +18,7 @@ class Player
     /**
      * Draw player info on screen
      */
-    void drawPlayerInfo(Arduboy2& ab, const Sprites& sprite);
+    void drawPlayerInfo(Arduboy2& ab);
 
      /**
       * Get the amount of damage the player will do

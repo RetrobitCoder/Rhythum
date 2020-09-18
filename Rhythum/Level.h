@@ -20,7 +20,7 @@ class Level
     Level();
     ~Level();
 
-    void drawBeats(const Sprites& sprite);
+    void drawBeats();
 
     void drawLevelCard(Arduboy2& ab);
 
