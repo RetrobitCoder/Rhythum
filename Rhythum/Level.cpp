@@ -20,7 +20,7 @@ Level::~Level()
   }
 }
 
-void Level::drawBeats(const Sprites& sprites)
+void Level::drawBeats()
 {
 
   for(uint8_t i = 0; i < MAX_BEAT_SIZE; i++)
@@ -51,7 +51,7 @@ void Level::drawBeats(const Sprites& sprites)
           break;
       }
 
-      sprites.drawSelfMasked(x, y, buttons, buttonFrame);      
+      Sprites::drawSelfMasked(x, y, buttons, buttonFrame);      
     }
   }
 }

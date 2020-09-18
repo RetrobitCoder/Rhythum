@@ -1,6 +1,5 @@
 #include <Arduboy2.h>
 #include <ArduboyPlaytune.h>
-#include <Sprites.h>
 
 #include "Bitmaps.h"
 #include "Enemy.h"
@@ -16,7 +15,6 @@ enum class GameState : unsigned char
 
 Arduboy2 ab;
 ArduboyPlaytune tunes(ab.audio.enabled);
-Sprites sprites;
 
 GameState gameState = GameState::Title;
 
@@ -70,8 +68,8 @@ void titleScreen()
     level = Level();
     player = Player();
 
-    goodBox = IndicatorBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT, ab);
-    perfectBox = IndicatorBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2, ab);
+    goodBox = IndicatorBox(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, INDICATOR_BOX_WIDTH, INDICATOR_BOX_HEIGHT);
+    perfectBox = IndicatorBox(WIDTH / 2 + (INDICATOR_BOX_WIDTH / 4), HEIGHT - (3 * INDICATOR_BOX_HEIGHT / 4), INDICATOR_BOX_WIDTH / 2, INDICATOR_BOX_HEIGHT / 2);
 
     level.drawLevelCard(ab);
     tunes.playScore(battle_music);
@@ -85,7 +83,7 @@ void drawGameDisplay()
   ab.drawRect(WIDTH / 2, HEIGHT - RHYTHM_BOX_HEIGHT, RHYTHM_BOX_WIDTH, RHYTHM_BOX_HEIGHT);
 
   // Draw good indicator box, perfect shouldn't be visible meant to be collision when perfect hit succeeds
-    sprites.drawSelfMasked(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, icons, 0);
+    Sprites::drawSelfMasked(WIDTH / 2, HEIGHT - INDICATOR_BOX_HEIGHT, icons, 0);
 }
 
 void drawSpace()
@@ -211,9 +209,9 @@ void gameLoop()
 
     drawGameDisplay();
     drawSpace();
-    level.drawBeats(sprites);
-    enemy.drawEnemy(ab, sprites);
-    player.drawPlayerInfo(ab, sprites);
+    level.drawBeats();
+    enemy.drawEnemy(ab);
+    player.drawPlayerInfo(ab);
   }
 }
 

@@ -7,7 +7,7 @@ class IndicatorBox
 {
   public:
     IndicatorBox(){}
-    IndicatorBox(int16_t x, int16_t y, uint8_t width, uint8_t height, Arduboy2& arduboy);
+    IndicatorBox(int16_t x, int16_t y, uint8_t width, uint8_t height);
     ~IndicatorBox(){}
 
     /**
@@ -16,7 +16,6 @@ class IndicatorBox
      */
     bool collides(const Rect& object) const;
   private:
-    Arduboy2 m_ab;
     Rect m_hitBox;
 };
 
